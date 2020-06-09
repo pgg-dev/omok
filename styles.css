@@ -12,41 +12,37 @@ body {
   flex-direction: column;
   align-items: center;
   padding: 50px 0px;
+  line-height: 0;
 }
 
-table {
-  border: 1px solid;
-  width: 500px;
-  height: 500px;
-}
-
-tr {
-  height: 25px;
-}
-
-td {
-  display: inline-block;
-  /* border: 1px solid black; */
-  width: 25px;
-  height: 25px;
-  position: relative;
-}
-
-td:before,
-td:after {
-  content: "";
-  position: absolute;
+#board {
   background: orange;
 }
 
-td:before {
+.col {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: inline-block;
+  /* border: 1px solid rgb(227, 227, 227); */
+  cursor: pointer;
+}
+
+.col:before,
+.col:after {
+  content: "";
+  position: absolute;
+  background: black;
+}
+
+.col:before {
   left: 50%;
   width: 8%;
   margin-left: -4%;
   height: 100%;
 }
 
-td:after {
+.col:after {
   top: 50%;
   height: 8%;
   margin-top: -4%;
