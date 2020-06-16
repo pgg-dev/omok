@@ -4,12 +4,8 @@ const cols = document.getElementsByClassName("col");
 let user = true;
 let game = true;
 
-let xIndex = [];
-let yIndex = [];
-
-let crossCount = 0;
-let xCount = 0;
-let yCount = 0;
+let rowCount = 0;
+let colCount = 0;
 
 let arr = Array(19)
   .fill(null)
@@ -27,66 +23,88 @@ for (let i = 0; i < 19; i++) {
   }
 }
 
-const indexCheck = (x, y) => {
-  xIndex = [];
-  yIndex = [];
-  for (let i = x + 4; i > x - 5; i--) {
-    if (x !== i && 0 <= i && i < 19) {
-      xIndex.push(i);
+const rowcheck = (x, y) => {
+  rowCount = 0;
+  let rightY = y - 1;
+  let leftY = y + 1;
+  const now = arr[x][y];
+  while (rightY > 0) {
+    if (arr[x][rightY] === now) {
+      rowCount = rowCount + 1;
+      rightY--;
+    } else {
+      break;
     }
   }
-  for (let j = y + 4; j > y - 5; j--) {
-    if (y !== j && 0 <= j && j < 19) {
-      yIndex.push(j);
+  while (leftY < 18) {
+    if (arr[x][leftY] === now) {
+      rowCount = rowCount + 1;
+      leftY++;
+    } else {
+      break;
     }
   }
 
-  console.log(`[${x}, ${y}]`);
-  console.log("xIndex");
-  console.log(xIndex);
-  console.log("yIndex");
-  console.log(yIndex);
-
-  valueCheck(x, y);
+  if (rowCount > 3) {
+    return setTimeout(() => alert("가로!!!!!!!!!!"), 1);
+  }
 };
 
-const valueCheck = (x, y) => {
-  xCount = 0;
-  yCount = 0;
-  crossCount = 0;
-
-  xIndex.forEach((i) => {
-    if (arr[x][y] === arr[i][y]) {
-      xCount = xCount + 1;
+const colcheck = (x, y) => {
+  colCount = 0;
+  let topX = x - 1;
+  let bottomX = x + 1;
+  const now = arr[x][y];
+  while (topX > 0) {
+    if (arr[topX][y] === now) {
+      colCount = colCount + 1;
+      topX--;
+    } else {
+      break;
     }
-  });
-
-  yIndex.forEach((j) => {
-    if (arr[x][y] === arr[x][j]) {
-      yCount = yCount + 1;
-    }
-  });
-
-  const a = xIndex.length > yIndex.length ? yIndex : xIndex;
-
-  for (let i = 0; i < a.length; i++) {
-    const b = xIndex[i];
-    const c = yIndex[i];
-
-    let reverseArr = yIndex;
-    reverseArr = yIndex.reverse();
-
-    const d = reverseArr[i];
-    if (arr[x][y] === arr[b][c]) {
-      crossCount = crossCount + 1;
-    }
-    if (arr[x][y] === arr[b][d]) {
-      crossCount = crossCount + 1;
+  }
+  while (bottomX < 18) {
+    if (arr[bottomX][y] === now) {
+      colCount = colCount + 1;
+      bottomX++;
+    } else {
+      break;
     }
   }
 
-  if (yCount > 3 || xCount > 3 || crossCount > 3) {
-    return setTimeout(() => alert("!!!!!!!!!!"), 1);
+  if (colCount > 3) {
+    return setTimeout(() => alert("세로!!!!!!!!!!"), 1);
+  }
+};
+
+const crossCheck1 = (x, y) => {
+  crossCount = 0;
+  let leftX = x - 1;
+  let leftY = y - 1;
+  let rightX = x + 1;
+  let rightY = y + 1;
+  const now = arr[x][y];
+  while (leftX > 0 || leftY > 0) {
+    if (arr[leftX][leftY] === now) {
+      crossCount = crossCount + 1;
+      leftX--;
+      leftY--;
+    } else {
+      break;
+    }
+  }
+  while (rightX < 18 || rightY < 18) {
+    if (arr[rightX][rightY] === now) {
+      crossCount = crossCount + 1;
+      rightX++;
+      rightY++;
+    } else {
+      break;
+    }
+  }
+
+  if (crossCount > 3) {
+    return setTimeout(() => alert("대각선!!!!!!!!!!"), 1);
   }
 };
 
@@ -105,7 +123,10 @@ function handleClick(e) {
     user = !user;
   }
 
-  indexCheck(parseInt(row), parseInt(col));
+  rowcheck(parseInt(row), parseInt(col));
+  colcheck(parseInt(row), parseInt(col));
+
+  crossCheck1(parseInt(row), parseInt(col));
 }
 
 if (cols) {
