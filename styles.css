@@ -19,6 +19,22 @@ body {
   background: orange;
 }
 
+#board .row:first-child .col::before {
+  top: 46%;
+}
+
+#board .row:last-child .col::before {
+  bottom: 46%;
+}
+
+.col:first-child::after {
+  left: 46%;
+}
+
+.col:last-child::after {
+  right: 46%;
+}
+
 .col {
   position: relative;
   width: 48px;

@@ -78,6 +78,7 @@ const colcheck = (x, y) => {
 };
 
 const crossCheck1 = (x, y) => {
+  // 모양\
   crossCount = 0;
   let leftX = x - 1;
   let leftY = y - 1;
@@ -104,7 +105,39 @@ const crossCheck1 = (x, y) => {
   }
 
   if (crossCount > 3) {
-    return setTimeout(() => alert("대각선!!!!!!!!!!"), 1);
+    return setTimeout(() => alert("대각선1!!!!!!!!!!"), 1);
+  }
+};
+
+const crossCheck2 = (x, y) => {
+  // 모양/
+  crossCount = 0;
+  let leftX = x + 1;
+  let leftY = y - 1;
+  let rightX = x - 1;
+  let rightY = y + 1;
+  const now = arr[x][y];
+  while (leftX < 18 || leftY > 0) {
+    if (arr[leftX][leftY] === now) {
+      crossCount = crossCount + 1;
+      leftX++;
+      leftY--;
+    } else {
+      break;
+    }
+  }
+  while (rightX > 0 || rightY < 18) {
+    if (arr[rightX][rightY] === now) {
+      crossCount = crossCount + 1;
+      rightX--;
+      rightY++;
+    } else {
+      break;
+    }
+  }
+
+  if (crossCount > 3) {
+    return setTimeout(() => alert("대각선2!!!!!!!!!!"), 1);
   }
 };
 
@@ -127,6 +160,7 @@ function handleClick(e) {
   colcheck(parseInt(row), parseInt(col));
 
   crossCheck1(parseInt(row), parseInt(col));
+  crossCheck2(parseInt(row), parseInt(col));
 }
 
 if (cols) {
